@@ -38,6 +38,6 @@ End Function
 
 Public Function HiddenOpenBook(tergetFileName) As Object
 
-    Set wbReadBook = owb.Open(Me.AbsolutelyPath(tergetFileName))
+    Set HiddenOpenBook = owb.Open(Me.AbsolutelyPath(tergetFileName))
     
 End Function
