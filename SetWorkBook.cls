@@ -13,31 +13,26 @@ Private curPath As String
 Private oxl As Excel.Application
 Private owb As Excel.Workbooks
     
-    
+' このブックを基準に対象のブックを選ぶ。
+' このブックより上の階層のブックは操作できないが、fsoを使う意味も薄いため一旦ThisWorkBookを利用している
 Private Sub Class_Initialize()
 
     curPath = ThisWorkbook.Path
-        
+    
     Set oxl = CreateObject("Excel.Application")
     
     Set owb = oxl.Application.Workbooks
     
 End Sub
 
-Public Function AbsolutelyPath(tergetFileName) As String
-
+Property Get AbsolutelyPath(tergetFileName) As String
     AbsolutelyPath = curPath & "\" & tergetFileName
-    
-End Function
+End Property
 
-Public Function OpenBook(tergetFileName) As Workbook
-
+Property Get OpenBook(tergetFileName) As Workbook
     Set OpenBook = Workbooks.Open(Me.AbsolutelyPath(tergetFileName))
-    
-End Function
+End Property
 
-Public Function HiddenOpenBook(tergetFileName) As Object
-
+Property Get HiddenOpenBook(tergetFileName) As Object
     Set HiddenOpenBook = owb.Open(Me.AbsolutelyPath(tergetFileName))
-    
-End Function
+End Property

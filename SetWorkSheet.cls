@@ -22,6 +22,14 @@ Public Function Init(ByRef tergetWb As Workbook, ByVal shName As String) As SetW
     
 End Function
 
+' シート内のデータが存在する範囲の最終行を返す
+Property Get UsedEndRow() As Long
+    UsedEndRow = thisSh.UsedRange.Rows.Count
+End Property
+
+Property Get UsedEndCol() As Long
+    UsedEndCol = thisSh.UsedRange.Columns.Count
+End Property
 
 ' 与えられた範囲の値を配列にして返す
 Public Function RangeToArray(ByRef tergetRange As Range) As Variant
@@ -37,7 +45,7 @@ Public Function RangeToArray(ByRef tergetRange As Range) As Variant
     Dim i As Long: i = 0
     Dim j As Long: j = 0
     
-    For Each row In rngThisSh.Rows
+    For Each row In rangeThisSh.Rows
         For Each column In row.Columns
             rangeAry(i, j) = column.Value
             j = j + 1
