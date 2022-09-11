@@ -156,3 +156,48 @@ Property Get RemoveColumnArray2D(ByRef arr As Variant, ByRef delCol As Long)
     RemoveColumnArray2D = temp
     
 End Property
+
+' [[0,1,2],[3,4,5]] → {0: [0,3], 1:[1,4], 2:[2,5]}
+' keyは列番号のイメージ
+Property Get Array2DToDict(ByRef arr As Variant) As Object
+    
+    Dim dic As New Dictionary
+    Dim i As Long
+    Dim j As Long
+    
+    Dim R As Long: R = 0
+    Dim newArr As Variant
+    For j = 0 To UBound(arr, 2)
+        ReDim newArr(UBound(arr, 1))
+        For i = 0 To UBound(arr, 1)
+            newArr(i) = arr(i, j)
+        Next i
+        dic.Add R, newArr
+        R = R + 1
+    Next j
+    
+    Set Array2DToDict = dic
+    
+End Property
+
+' memo:今後Dictionaryクラスを作ったらそっちに移行する予定
+' {0: [0,3], 1:[1,4], 2:[2,5]} → [[0,1,2],[3,4,5]]
+Property Get DictToArray2D(ByRef dic As Dictionary) As Variant
+    Dim keys() As Variant
+    keys = dic.keys
+    
+    Dim rowsAryInDict As Long: rowsAryInDict = UBound(dic.Item(keys(0)))
+    Dim newArr() As Variant: ReDim newArr(rowsAryInDict, UBound(keys, 1))
+    
+    Dim i As Long
+    Dim j As Long
+    Dim aryInDict As Variant
+    For i = 0 To UBound(keys, 1)
+        aryInDict = dic.Item(keys(i))
+        For j = 0 To rowsAryInDict
+            newArr(j, i) = aryInDict(j)
+        Next j
+    Next i
+    
+    DictToArray2D = newArr
+End Property

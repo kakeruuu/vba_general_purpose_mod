@@ -13,10 +13,13 @@ Private thisWb As Workbook
 Public thisSh As Worksheet
 Private thisShName As String
 
-Public Function Init(ByRef tergetWb As Workbook, ByVal shName As String) As SetWorkSheet
+Public Function Init(ByRef tergetWb As Workbook, ByVal shName As String) As ClassWorkSheet
 
     Set Init = Me
     Set thisWb = tergetWb
+    ' memo:thisShでSheetオブジェクトを返すか、OpenSheetsのようなプロシージャを作るべきか
+    ' 後者の方が変数にシートオブジェクトを代入するというイメージが沸きやすいが
+    ' 特定のシートを操作するというより、シートオブジェクト全般を操作するためのクラスとしての意味合いが強くなる？
     Set thisSh = tergetWb.Sheets(shName)
     thisShName = shName
     
@@ -32,16 +35,16 @@ Property Get UsedEndCol() As Long
 End Property
 
 ' 与えられた範囲の値を配列にして返す
-Public Function RangeToArray(ByRef tergetRange As Range) As Variant
+Public Function RangeToArray(ByRef tergetRange As range) As Variant
 
-    Dim rangeThisSh As Range
-    Set rangeThisSh = thisSh.Range(tergetRange.Address)
+    Dim rangeThisSh As range
+    Set rangeThisSh = thisSh.range(tergetRange.Address)
     
     Dim rangeAry() As Variant
     ReDim rangeAry(rangeThisSh.Rows.Count - 1, rangeThisSh.Columns.Count - 1)
     
-    Dim row As Range
-    Dim column As Range
+    Dim row As range
+    Dim column As range
     Dim i As Long: i = 0
     Dim j As Long: j = 0
     
