@@ -201,3 +201,26 @@ Property Get DictToArray2D(ByRef dic As Dictionary) As Variant
     
     DictToArray2D = newArr
 End Property
+
+' 配列の特定の列に対してある値が含まれている確認し、入っていたらその行を削除する関数
+Property Get ExcludeRowForIncludeWordInArray(ByRef ary As Variant, ByVal tergetCol As Long, ByVal tergetWord As Variant) As Variant
+    
+    Dim newArr() As Variant: ReDim newArr(0, UBound(ary, 2))
+    Dim sumArr As Variant
+    
+    Dim i As Long: i = 0
+    Dim j As Long: j = 0
+    
+    For i = 0 To UBound(ary, 1)
+        ' 配列行内のtergetColにtergetWordが含まれていなかったら
+        If InStr(ary(i, tergetCol), tergetWord) = 0 Then
+            For j = 0 To UBound(ary, 2)
+                newArr(0, j) = ary(i, j)
+            Next j
+            sumArr = Me.MergeArrayToRow(sumArr, newArr)
+        End If
+    Next i
+    
+    ExcludeRowForIncludeWordInArray = sumArr
+    
+End Property
