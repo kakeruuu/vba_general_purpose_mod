@@ -33,30 +33,3 @@ End Property
 Property Get UsedEndCol() As Long
     UsedEndCol = thisSh.UsedRange.Columns.Count
 End Property
-
-' —^‚¦‚ç‚ê‚½”ÍˆÍ‚Ì’l‚ð”z—ñ‚É‚µ‚Ä•Ô‚·
-Public Function RangeToArray(ByRef tergetRange As range) As Variant
-
-    Dim rangeThisSh As range
-    Set rangeThisSh = thisSh.range(tergetRange.Address)
-    
-    Dim rangeAry() As Variant
-    ReDim rangeAry(rangeThisSh.Rows.Count - 1, rangeThisSh.Columns.Count - 1)
-    
-    Dim row As range
-    Dim column As range
-    Dim i As Long: i = 0
-    Dim j As Long: j = 0
-    
-    For Each row In rangeThisSh.Rows
-        For Each column In row.Columns
-            rangeAry(i, j) = column.Value
-            j = j + 1
-        Next column
-        j = 0
-        i = i + 1
-    Next row
-    
-    RangeToArray = rangeAry
-    
-End Function
